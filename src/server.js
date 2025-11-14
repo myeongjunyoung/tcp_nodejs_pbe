@@ -52,10 +52,21 @@ io.on('connection', (socket) => {
     // 매칭 전엔 방이 없어서 브로드캐스트가 안 됩니다.
     socket.emit('system:info', '매칭이 된 후 채팅할 수 있어요.');
     return;
+    //여기에 로그 찍어보기
   }
 
   const nick = socket.data.nick || 'Player';
   const payload = { id: socket.id, nick, msg: text, ts: Date.now() };
+
+   console.log(`
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[${ new Date().toLocaleString('ko-KR', { hour12:false }) }] CHAT
+• Room   : ${roomId}
+• From   : ${payload.nick} (${payload.id})
+• Message: ${payload.msg}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`);
+//콘솔로 찍기
   io.to(roomId).emit('chat:message', payload);
   });
 

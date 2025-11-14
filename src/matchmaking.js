@@ -28,7 +28,7 @@ export function createMatchMaker(io) { // http위에 소켓io가 올라와있고
 //    '소켓ID3' → socket객체3,
 //    ...
 //      }
-      const roomId =  `room_${++roomCount}`;//대충 두사람의 방이라는거겠지?
+      const roomId =  `room_${++roomCount}`;//대충 두사람의 방이라는거겠지? 나중에 좀더 복잡으로 바꿔볼까?
       s1.join(roomId); // join은 방에 소켓유저를 넣는기능
       s2.join(roomId);
       s1.data.roomId = roomId;
@@ -39,8 +39,8 @@ export function createMatchMaker(io) { // http위에 소켓io가 올라와있고
       io.to(roomId).emit('match:ready', {
         roomId,
         players: [
-          { id: s1.id, nick: s1.data.nick || 'Player1' },
-          { id: s2.id, nick: s2.data.nick || 'Player2' }
+          { id: s1.id, nick: s1.data.nick || 'Guest' },
+          { id: s2.id, nick: s2.data.nick || 'Guest' }
         ] //  data.nick이 공백이면  player1 ,2
       });
 
@@ -76,7 +76,8 @@ export function createMatchMaker(io) { // http위에 소켓io가 올라와있고
     if (room.roundTimer == null) return; // new: 0라운드도 유효. 타이머 존재만 확인
 
     room.picks.set(socket.id, hand);//룸의picks에 맵세팅
-
+    const nick = socket.data.nick || 'Guest'; 
+console.log(`[PICK] room=${roomId} round=${room.round ?? '?'} nick=${nick} id=${socket.id} hand=${hand}`);
     socket.to(roomId).emit('opponent:picked'); //roomid에있는 나를 제외한 상대에게 이런 이벤트를 보내라 
 
     const p1Pick = room.picks.get(room.p1); //
@@ -154,11 +155,11 @@ export function createMatchMaker(io) { // http위에 소켓io가 올라와있고
     room.picks = new Map();
     io.to(roomId).emit('round:start', {    // new: 표시용 1..5
       round: room.round + 1,
-      deadline: Date.now() + 3000
+      deadline: Date.now() + 7000
     });
 
     clearTimeout(room.roundTimer);
-    room.roundTimer = setTimeout(() => decideRound(roomId), 3000);
+    room.roundTimer = setTimeout(() => decideRound(roomId), 7000); //데드라인 정하고 7초뒤 
   }
 
   function decideRound(roomId) {

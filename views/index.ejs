@@ -55,6 +55,7 @@
   <!-- Chat Dock (왼쪽 하단 고정) -->
   <div id="chatDock" class="chat-dock">
     <div class="chat-header">채팅</div>
+     <div id="chatResize" class="chat-resize-bar"></div>
     <ul id="chatList" class="chat-log"></ul>
     <div class="chat-input-row">
       <input id="chatInput" type="text" placeholder="메시지를 입력하세요" maxlength="300" />
@@ -64,8 +65,10 @@
 
   <!-- Socket.IO 클라이언트 -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/client.js" defer></script>
-
+ 
+<script src="/core.js" defer></script>
+<script src="/game.js" defer></script>
+<script src="/chat.js" defer></script>
  <!--  승리/패배 영상 오버레이 -->
 <div id="resultOverlay">
   <div class="dialog">

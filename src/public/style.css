@@ -48,7 +48,7 @@ button.accent { background: var(--accent); border-color: var(--accent); color: w
   left: 16px;
   bottom: 16px;
   width: 320px;
-  max-height: 46vh;              /* 로그 영역이 스크롤됨 */
+  max-height: 46vh;              
   background: rgba(24,24,28,0.92);
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 12px;
@@ -58,6 +58,16 @@ button.accent { background: var(--accent); border-color: var(--accent); color: w
   backdrop-filter: blur(6px);
   box-shadow: 0 6px 20px rgba(0,0,0,0.35);
   z-index: 30;
+  resize: none;        
+  overflow: hidden;
+}
+.chat-resize-bar {
+  height: 6px;
+  cursor: ns-resize;    
+  background: rgba(255,255,255,0.1);
+}
+.chat-resize-bar:hover {
+  background: rgba(255,255,255,0.25);
 }
 .chat-header{
   padding: 10px 12px;
